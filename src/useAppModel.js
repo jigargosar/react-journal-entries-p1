@@ -1,15 +1,13 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import * as R from 'ramda'
 import faker from 'faker'
 import PouchDb from 'pouchdb-browser'
-import { observable } from 'mobx'
 import { _, it } from 'param.macro'
-import { getCached, setCache } from './cache-helpers'
 import validate from 'aproba'
 import * as nanoid from 'nanoid'
 import hotkeys from 'hotkeys-js'
 import { isBlank } from './ramda-helpers'
-import { useDisposable } from 'mobx-react-lite'
+import { useCachedObservable } from './mobx-helpers'
 
 const db = new PouchDb('journal-entries')
 
@@ -130,22 +128,6 @@ function useEntryDbChangeEffect(actions) {
       .on('error', actions.setLastErrMsg)
     return () => changes.cancel()
   }, [])
-}
-
-function useCachedObservable(defaults, cacheKey) {
-  validate('OS', arguments)
-
-  const [model] = useState(() =>
-    R.compose(
-      observable.object,
-      R.mergeDeepRight(defaults),
-      R.defaultTo({}),
-      getCached,
-    )(cacheKey),
-  )
-
-  useDisposable(() => setCache(cacheKey, model), [])
-  return model
 }
 
 export function useAppModel() {
