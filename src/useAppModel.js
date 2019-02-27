@@ -25,8 +25,7 @@ function useActions(setModel) {
   return useMemo(
     () =>
       wrapWithSetModel({
-        openNew: () =>
-          R.mergeLeft({ newEntryContent: '', showNewEntry: true }),
+        openNew: () => R.mergeLeft({ showNewEntry: true }),
         clearAndCloseNew: () =>
           R.mergeLeft({ newEntryContent: '', showNewEntry: false }),
         closeNew: () => R.mergeLeft({ showNewEntry: false }),
