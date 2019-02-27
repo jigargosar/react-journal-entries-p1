@@ -25,7 +25,7 @@ function useActions(setModel) {
   return useMemo(
     () =>
       wrapWithSetModel({
-        addNew: () =>
+        openNew: () =>
           R.mergeLeft({ newEntryContent: '', showNewEntry: true }),
         clearAndCloseNew: () =>
           R.mergeLeft({ newEntryContent: '', showNewEntry: false }),
@@ -68,7 +68,7 @@ function useEffects(actions, model) {
     const otherwiseHandlePouchDbError = R.otherwise(actions.setLastErrMsg)
 
     const openNewAndFocus = () => {
-      actions.addNew()
+      actions.openNew()
 
       requestAnimationFrame(() => {
         const el = document.getElementById('new-entry-input')
