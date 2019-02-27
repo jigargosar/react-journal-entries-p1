@@ -145,14 +145,13 @@ export function useAppModel() {
     window.model = model
   }
 
-  const actions = useActions(function(fn) {
-    R.compose(
-      R.forEachObjIndexed((v, k) => {
-        model[k] = v
-      }),
-      R.applyTo(model),
-    )(fn)
-  })
+  const setModel = R.compose(
+    R.forEachObjIndexed((v, k) => {
+      model[k] = v
+    }),
+    R.applyTo(model),
+  )
+  const actions = useActions(setModel)
 
   useEntryDbChangeEffect(actions)
 
