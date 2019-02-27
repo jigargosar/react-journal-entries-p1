@@ -2,6 +2,7 @@ import * as PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { observer } from 'mobx-react-lite'
 
 dayjs.extend(relativeTime)
 
@@ -33,4 +34,4 @@ function EntryItem({ entry }) {
 EntryItem.propTypes = {
   entry: PropTypes.object.isRequired,
 }
-export default EntryItem
+export default observer(EntryItem)

@@ -1,4 +1,5 @@
 import React from 'react'
+import { observer } from 'mobx-react-lite'
 
 function Button(props) {
   return (
@@ -10,4 +11,4 @@ function Button(props) {
   )
 }
 
-export default Button
+export default observer(Button)
