@@ -67,6 +67,14 @@ function useEffects(actions, model) {
   return useMemo(() => {
     const otherwiseHandlePouchDbError = R.otherwise(actions.setLastErrMsg)
 
+    const addNewAndFocus = () => {
+      actions.addNew()
+
+      requestAnimationFrame(() => {
+        const el = document.getElementById('new-entry-input')
+        el.focus()
+      })
+    }
     return {
       onFakeAddClicked: () => {
         const newEntry = createNewEntry({
@@ -77,8 +85,8 @@ function useEffects(actions, model) {
           otherwiseHandlePouchDbError,
         )(db)
       },
-      onAddNewHotKey: () => actions.addNew(),
-      onAddNewClicked: () => actions.addNew(),
+      onAddNewHotKey: addNewAndFocus,
+      onAddNewClicked: addNewAndFocus,
       onNewEntryContentChange: e =>
         actions.setNewEntryContent(e.target.value),
       closeNewEntry: () => actions.closeNew(),
