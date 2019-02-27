@@ -152,7 +152,7 @@ export function useAppModel() {
   const effects = useEffects(actions, model)
 
   useEffect(() => {
-    console.log(`hotkeys.getScope()`, hotkeys.getScope())
+    console.debug(`hotkeys.getScope()`, hotkeys.getScope())
     hotkeys('n', 'other', (event, handler) => {
       console.debug(`event,handler`, event, handler)
       // console.log(`event,handler`, event, handler)
