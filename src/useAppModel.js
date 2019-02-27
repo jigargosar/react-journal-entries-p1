@@ -150,13 +150,13 @@ export function useAppModel() {
 
   useEffect(() => {
     console.log(`hotkeys.getScope()`, hotkeys.getScope())
-    hotkeys('n', 'all', (event, handler) => {
+    hotkeys('n', 'other', (event, handler) => {
       // console.debug(`event,handler`, event, handler)
       console.log(`event,handler`, event, handler)
     })
 
     return () => {
-      hotkeys.unbind('n', 'all')
+      hotkeys.unbind('n', 'other')
     }
   }, [])
 
