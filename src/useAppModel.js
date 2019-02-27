@@ -7,6 +7,7 @@ import { observable } from 'mobx'
 import { getCached, setCache } from './cache-helpers'
 import validate from 'aproba'
 import * as nanoid from 'nanoid'
+import hotkeys from 'hotkeys-js'
 
 const db = new PouchDb('journal-entries')
 
@@ -105,6 +106,16 @@ function useEffects(actions, model) {
   }, [])
 }
 
+function useEntryDbChangeEffect(actions) {
+  useEffect(() => {
+    const changes = db
+      .changes({ include_docs: true, live: true })
+      .on('change', actions.handleEntryDbChange)
+      .on('error', actions.setLastErrMsg)
+    return () => changes.cancel()
+  }, [])
+}
+
 export function useAppModel() {
   const [model] = useState(() =>
     R.compose(
@@ -135,12 +146,18 @@ export function useAppModel() {
 
   useEffect(() => setCache('appModel', model), [model])
 
+  useEntryDbChangeEffect(actions)
+
   useEffect(() => {
-    const changes = db
-      .changes({ include_docs: true, live: true })
-      .on('change', actions.handleEntryDbChange)
-      .on('error', actions.setLastErrMsg)
-    return () => changes.cancel()
+    console.log(`hotkeys.getScope()`, hotkeys.getScope())
+    hotkeys('n', 'all', (event, handler) => {
+      // console.debug(`event,handler`, event, handler)
+      console.log(`event,handler`, event, handler)
+    })
+
+    return () => {
+      hotkeys.unbind('n', 'all')
+    }
   }, [])
 
   const effects = useEffects(actions, model)

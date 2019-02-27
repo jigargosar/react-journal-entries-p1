@@ -16,7 +16,8 @@
     "react-dom": "^16.8.3",
     "react-hot-keys": "^1.2.2",
     "react-scripts": "2.1.5",
-    "tachyons": "^4.11.1"
+    "tachyons": "^4.11.1",
+    "hotkeys-js": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
