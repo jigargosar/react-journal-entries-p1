@@ -19,7 +19,7 @@ function App() {
           className="f4 pv2"
           onClick={() => console.table(getAllEntries(model))}
         >
-          Journal Entries
+          Journal
         </div>
         <div className="flex-grow-1" />
         <Button onClick={effects.onAddNewClicked}>add new</Button>
