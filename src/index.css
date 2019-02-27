@@ -31,3 +31,7 @@ body {
 * {
   user-select: auto !important;
 }
+
+.entry-content {
+  white-space: pre-wrap;
+}

@@ -24,7 +24,7 @@ function EntryItem({ entry }) {
 
   return (
     <div className="mv3 br3 ba b--light-blue" onClick={onClick}>
-      <div className="pa2 pre code">{entry.content}</div>
+      <div className="pa2 pre code entry-content">{entry.content}</div>
       <div
         className="pa2 black-50"
         title={dayjs(entry.createdAt).format()}
