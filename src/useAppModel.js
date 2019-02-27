@@ -154,8 +154,9 @@ export function useAppModel() {
   useEffect(() => {
     console.log(`hotkeys.getScope()`, hotkeys.getScope())
     hotkeys('n', 'other', (event, handler) => {
-      // console.debug(`event,handler`, event, handler)
-      console.log(`event,handler`, event, handler)
+      console.debug(`event,handler`, event, handler)
+      // console.log(`event,handler`, event, handler)
+      effects.onAddNewHotKey()
     })
 
     return () => {
