@@ -157,6 +157,7 @@ export function useAppModel() {
       console.debug(`event,handler`, event, handler)
       // console.log(`event,handler`, event, handler)
       effects.onAddNewHotKey()
+      event.preventDefault()
     })
 
     return () => {
