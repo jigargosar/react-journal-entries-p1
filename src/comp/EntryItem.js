@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { observer } from 'mobx-react-lite'
+import { toJS } from 'mobx'
 
 dayjs.extend(relativeTime)
 
 function EntryItem({ entry }) {
   const onClick = () => {
-    console.table(entry)
+    console.table(toJS(entry))
   }
   const [displayTimeAgo, setDisplayTimeAgo] = useState(() =>
     dayjs(entry.createdAt).fromNow(),
