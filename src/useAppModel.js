@@ -158,10 +158,7 @@ export function useAppModel() {
   const effects = useEffects(actions, model)
 
   useEffect(() => {
-    console.debug(`hotkeys.getScope()`, hotkeys.getScope())
-    hotkeys('n', 'other', (event, handler) => {
-      console.debug(`event,handler`, event, handler)
-      // console.log(`event,handler`, event, handler)
+    hotkeys('n', 'other', event => {
       effects.onOpenNewHotKey()
       event.preventDefault()
     })
