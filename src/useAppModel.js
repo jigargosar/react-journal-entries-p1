@@ -163,9 +163,7 @@ export function useAppModel() {
       event.preventDefault()
     })
 
-    return () => {
-      hotkeys.unbind('n', 'other')
-    }
+    return () => hotkeys.unbind('n', 'other')
   }, [])
 
   return [model, effects]
