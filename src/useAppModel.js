@@ -75,6 +75,7 @@ function useEffects(actions, model) {
           otherwiseHandlePouchDbError,
         )(db)
       },
+      onAddNewHotKey: () => actions.addNew(),
       onAddNewClicked: () => actions.addNew(),
       onNewEntryContentChange: e =>
         actions.setNewEntryContent(e.target.value),
@@ -148,6 +149,8 @@ export function useAppModel() {
 
   useEntryDbChangeEffect(actions)
 
+  const effects = useEffects(actions, model)
+
   useEffect(() => {
     console.log(`hotkeys.getScope()`, hotkeys.getScope())
     hotkeys('n', 'other', (event, handler) => {
@@ -159,8 +162,6 @@ export function useAppModel() {
       hotkeys.unbind('n', 'other')
     }
   }, [])
-
-  const effects = useEffects(actions, model)
 
   return [model, effects]
 }
