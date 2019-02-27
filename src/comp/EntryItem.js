@@ -23,9 +23,12 @@ function EntryItem({ entry }) {
   }, [entry.createdAt])
 
   return (
-    <div className="pv2" onClick={onClick}>
-      <div className="code">{entry.content}</div>
-      <div className="black-50" title={dayjs(entry.createdAt).format()}>
+    <div className="mv3 br3 ba b--light-blue" onClick={onClick}>
+      <div className="pa2 pre code">{entry.content}</div>
+      <div
+        className="pa2 black-50"
+        title={dayjs(entry.createdAt).format()}
+      >
         {displayTimeAgo}
       </div>
     </div>
