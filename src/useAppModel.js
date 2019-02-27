@@ -26,8 +26,9 @@ function useActions(setModel) {
       wrapWithSetModel({
         addNew: () =>
           R.mergeLeft({ newEntryContent: '', showNewEntry: true }),
-        closeNew: () =>
+        clearAndCloseNew: () =>
           R.mergeLeft({ newEntryContent: '', showNewEntry: false }),
+        closeNew: () => R.mergeLeft({ showNewEntry: false }),
         setNewEntryContent: content =>
           R.mergeLeft({ newEntryContent: content }),
         setLastErrMsg(err) {
@@ -79,13 +80,14 @@ function useEffects(actions, model) {
       onAddNewClicked: () => actions.addNew(),
       onNewEntryContentChange: e =>
         actions.setNewEntryContent(e.target.value),
-      saveNewEntry: content => {
+      closeNewEntry: () => actions.closeNew(),
+      saveNewEntry: () => {
         const newEntry = createNewEntry({
           content: model.newEntryContent,
         })
         R.pipe(
           it.put(newEntry),
-          R.then(() => actions.closeNew()),
+          R.then(() => actions.clearAndCloseNew()),
           otherwiseHandlePouchDbError,
         )(db)
       },

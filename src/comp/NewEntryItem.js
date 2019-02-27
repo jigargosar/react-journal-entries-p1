@@ -6,12 +6,14 @@ function NewEntryItem({ content, effects }) {
   return (
     <div className="pv2 code">
       <Hotkeys
-        keyName="control+enter,command+enter"
+        keyName="control+enter,command+enter,esc"
         onKeyDown={kn => {
           switch (kn) {
             case 'control+enter':
             case 'command+enter':
               return effects.saveNewEntry()
+            case 'esc':
+              return effects.closeNewEntry()
             default:
               break
           }
