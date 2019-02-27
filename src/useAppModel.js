@@ -67,7 +67,7 @@ function useEffects(actions, model) {
   return useMemo(() => {
     const otherwiseHandlePouchDbError = R.otherwise(actions.setLastErrMsg)
 
-    const addNewAndFocus = () => {
+    const openNewAndFocus = () => {
       actions.addNew()
 
       requestAnimationFrame(() => {
@@ -85,8 +85,8 @@ function useEffects(actions, model) {
           otherwiseHandlePouchDbError,
         )(db)
       },
-      onAddNewHotKey: addNewAndFocus,
-      onAddNewClicked: addNewAndFocus,
+      onOpenNewHotKey: openNewAndFocus,
+      onAddNewClicked: openNewAndFocus,
       onNewEntryContentChange: e =>
         actions.setNewEntryContent(e.target.value),
       closeNewEntry: () => actions.closeNew(),
@@ -171,7 +171,7 @@ export function useAppModel() {
     hotkeys('n', 'other', (event, handler) => {
       console.debug(`event,handler`, event, handler)
       // console.log(`event,handler`, event, handler)
-      effects.onAddNewHotKey()
+      effects.onOpenNewHotKey()
       event.preventDefault()
     })
 
