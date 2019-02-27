@@ -32,6 +32,6 @@ body {
   user-select: auto !important;
 }
 
-.entry-content {
+.ws-pre-wrap {
   white-space: pre-wrap;
 }
