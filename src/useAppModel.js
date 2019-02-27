@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import * as R from 'ramda'
 import faker from 'faker'
-import { _, it } from 'param.macro'
 import PouchDb from 'pouchdb-browser'
 import { observable } from 'mobx'
+import { _, it } from 'param.macro'
 import { getCached, setCache } from './cache-helpers'
 import validate from 'aproba'
 import * as nanoid from 'nanoid'
 import hotkeys from 'hotkeys-js'
+import { isBlank } from './ramda-helpers'
 
 const db = new PouchDb('journal-entries')
 
@@ -82,14 +83,18 @@ function useEffects(actions, model) {
         actions.setNewEntryContent(e.target.value),
       closeNewEntry: () => actions.closeNew(),
       saveNewEntry: () => {
-        const newEntry = createNewEntry({
-          content: model.newEntryContent,
-        })
-        R.pipe(
-          it.put(newEntry),
-          R.then(() => actions.clearAndCloseNew()),
-          otherwiseHandlePouchDbError,
-        )(db)
+        if (isBlank(model.newEntryContent)) {
+          actions.clearAndCloseNew()
+        } else {
+          const newEntry = createNewEntry({
+            content: model.newEntryContent,
+          })
+          R.pipe(
+            it.put(newEntry),
+            R.then(() => actions.clearAndCloseNew()),
+            otherwiseHandlePouchDbError,
+          )(db)
+        }
       },
       onDeleteAllClicked: () =>
         R.pipe(
