@@ -9,6 +9,7 @@ import validate from 'aproba'
 import * as nanoid from 'nanoid'
 import hotkeys from 'hotkeys-js'
 import { isBlank } from './ramda-helpers'
+import { useDisposable } from 'mobx-react-lite'
 
 const db = new PouchDb('journal-entries')
 
@@ -131,19 +132,31 @@ function useEntryDbChangeEffect(actions) {
   }, [])
 }
 
-export function useAppModel() {
+function useCachedObservable(defaults, cacheKey) {
+  validate('OS', arguments)
+
   const [model] = useState(() =>
     R.compose(
       observable.object,
-      R.mergeDeepRight({
-        entryById: {},
-        lastErrMsg: null,
-        showNewEntry: false,
-        newEntryContent: '',
-      }),
+      R.mergeDeepRight(defaults),
       R.defaultTo({}),
       getCached,
-    )('appModel'),
+    )(cacheKey),
+  )
+
+  useDisposable(() => setCache(cacheKey, model), [])
+  return model
+}
+
+export function useAppModel() {
+  const model = useCachedObservable(
+    {
+      entryById: {},
+      lastErrMsg: null,
+      showNewEntry: false,
+      newEntryContent: '',
+    },
+    'appModel',
   )
 
   if (process.env.NODE_ENV !== 'production') {
@@ -158,8 +171,6 @@ export function useAppModel() {
   }
 
   const actions = useActions(setModel)
-
-  useEffect(() => setCache('appModel', model), [model])
 
   useEntryDbChangeEffect(actions)
 
