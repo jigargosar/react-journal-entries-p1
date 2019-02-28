@@ -14,6 +14,13 @@ function App() {
 
   return (
     <div className="sans-serif lh-title measure-wide center">
+      <div className="pv3">
+        <input
+          type="text"
+          value={model.remoteUrl}
+          onChange={effects.onRemoteUrlChange}
+        />
+      </div>
       <header className="flex items-center">
         <div
           className="f4 pv2"

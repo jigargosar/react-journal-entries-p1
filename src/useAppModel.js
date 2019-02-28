@@ -74,6 +74,7 @@ function useEffects(actions, model) {
       })
     }
     return {
+      onRemoteUrlChange: () => {},
       onFakeAddClicked: () => {
         const newEntry = createNewEntry({
           content: faker.lorem.paragraph(),
@@ -83,7 +84,7 @@ function useEffects(actions, model) {
           otherwiseHandlePouchDbError,
         )(db)
       },
-      onOpenNewHotKey: openNewAndFocus,
+      onAddNewHotKey: openNewAndFocus,
       onAddNewClicked: openNewAndFocus,
       onNewEntryContentChange: e =>
         actions.setNewEntryContent(e.target.value),
@@ -160,7 +161,7 @@ export function useAppModel() {
 
   useEffect(() => {
     hotkeys('n', 'other', event => {
-      effects.onOpenNewHotKey()
+      effects.onAddNewHotKey()
       event.preventDefault()
     })
 
