@@ -137,6 +137,7 @@ export function useAppModel() {
       lastErrMsg: null,
       showNewEntry: false,
       newEntryContent: '',
+      remoteUrl: '',
     },
     'appModel',
   )
